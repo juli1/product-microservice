@@ -16,3 +16,19 @@ jobs:
           dd_service: "product-microservice"
           dd_env: "github"
           dd_site: ${{ secrets.DD_SITE }}
+
+  datadog-gate:
+    needs: check-quality
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install node
+        uses: actions/setup-node@v3
+      - run: yarn global add @datadog/datadog-ci
+      - run: sleep 30
+      - run: >
+          DD_BETA_COMMANDS_ENABLED=true 
+          DATADOG_API_KEY=${{ secrets.DD_API_KEY }}
+          DATADOG_APP_KEY=${{ secrets.DD_APP_KEY }} 
+          DATADOG_SITE=${{ secrets.DD_SITE }}
+          datadog-ci gate evaluate
