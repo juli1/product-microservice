@@ -25,7 +25,6 @@ jobs:
       - name: Install node
         uses: actions/setup-node@v3
       - run: yarn global add @datadog/datadog-ci
-      - run: sleep 30
       - run: >
           DD_BETA_COMMANDS_ENABLED=true 
           DATADOG_API_KEY=${{ secrets.DD_API_KEY }}
