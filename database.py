@@ -9,7 +9,7 @@ def connect_database():
 def get_products(db_connection, limit, offset):
     products = []
     cursor = db_connection.cursor();
-    res = cursor.execute(f"SELECT id, title from products LIMIT {limit} OFFSET {offset}");
+    res = cursor.execute("SELECT id, title from products");
     for v in res:
         products.append(Product(v[0], v[1]))
 
